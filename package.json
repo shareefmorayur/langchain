@@ -1,5 +1,5 @@
 {
-  "name": "langchain",
+  "name": "@shareefmorayur/langchain",
   "version": "0.0.198",
   "description": "Typescript bindings for langchain",
   "type": "module",
@@ -826,7 +826,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:langchain-ai/langchainjs.git"
+    "url": "git@github.com:shareefmorayur/langchain.git"
   },
   "scripts": {
     "build": "yarn clean && yarn build:esm && yarn build:cjs && yarn build:scripts",
