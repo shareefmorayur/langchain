@@ -1,21 +1,36 @@
-name: Publish to NPM
+name: Manually triggered build
+
 on:
-  release:
-    types: [created]
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Person to greet'
+        required: true
+        default: 'Mona the Octocat'
+      home:
+        description: 'location'
+        required: false
+        default: 'The Octoverse'
+
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
+    env:
+      RUNNING_ON_GITHUB_ACTION: true
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-      - name: Install dependencies and build 🔧
-        run: npm ci && npm run build
-      - name: Publish package on NPM 📦
-        run: npm publish
+          node-version: '20'
+          cache: 'yarn'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@shareefmorayur'
+      - run: yarn install
+
+      - name: Build
+        run: yarn build
+
+      - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
